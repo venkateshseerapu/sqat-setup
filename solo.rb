@@ -1,3 +1,3 @@
-file_cache_path "/home/sqat/SQATDashboard/Temp"
-cookbook_path "/home/sqat/workarea/"
-json_attribs "/home/sqat/workarea/SQATDashboard/node.json"
+file_cache_path "#{node[:home]}/Temp"
+cookbook_path "#{node[:home]}/workarea/"
+json_attribs "#{node[:home]}/workarea/sqat-setup/node.json"
