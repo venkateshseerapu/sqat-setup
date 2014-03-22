@@ -13,4 +13,4 @@ else get home name from system and store it attributes file
 
 installation .sh file
 
-
+for creating .password files also use cook book only... ask password when he runs solo.rb and store it in .password file
