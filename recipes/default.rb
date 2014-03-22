@@ -69,3 +69,35 @@ puts "picking p4client_spec"
     :HOST => "#{node[:system][:host]}",
   )
 end
+
+ruby_block "p4login" do
+ block do
+  require "P4"
+  p4 = P4.new
+  p4.port="#{node[:p4settings][:P4PORT]}"
+  p4.user="#{node[:p4settings][:P4USER]}"
+  password=''
+  File.open("#{node[:home]}/.p4passwd").each{|line| password << line}
+  p4.password = password
+  p4.connect
+  p4.run_login
+  text=''
+  File.open("#{node[:workspace]}/p4client.txt").each { |line| text << line }
+  p4.input=text
+  p4.run_client("-i")
+  p4.client="#{node[:p4settings][:P4CLIENT]}"
+  begin
+   p4.run_sync
+  rescue => e
+   puts e
+  end
+
+ end
+end
+
+script "copy p4 ticket" do
+interpreter "bash"
+code <<-EOH
+cp /root/.p4tickets /home/sqat/.p4tickets
+EOH
+end
